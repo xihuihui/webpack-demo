@@ -1,22 +1,53 @@
 import React from 'react'
 import {HashRouter as Router, Switch, Route, Link} from 'react-router-dom';
 
-import {Button,BackTop} from 'antd';
+import {BackTop} from 'antd';
 
+import Loginmodal  from './Loginmodal';
+ import Registered from './Registered';
 import '../css/app.css';
 
+
+
 class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            visible: false,
+            // confirmLoading: false
+            showreModal:false
+        };
+    }
+
+    showModal = () => {
+        this.setState({visible: true});
+    }
+
+   
+
+    handleCancel = (e) => {
+        this.setState({visible: false});
+    }
+
+
+    showreModal=()=>{
+        this.setState({showreModal: !this.state.showreModal});
+    }
+
+   
+
     render() {
         return (
             <div>
+                <Registered  showreModal={this.state.showreModal} Cancel={this.showreModal}/>
                 <div className='index-body'>
                     <div className='top-box'>
                         {/* <img className='bg-top' src={top} alt=""/> */}
                     </div>
                     <div className='box-text'>
                         <div className='logo'>Just F IT</div>
-                        <span className='login'>登录</span>
-                        <span className='login'>注册</span>
+                        <span className='login' onClick={this.showModal}>登录</span>
+                        <span className='login' onClick={this.showreModal}>注册</span>
                         <span className='login get-more'>浏览</span>
                     </div>
                 </div>
@@ -41,19 +72,23 @@ class App extends React.Component {
                 </div>
                 <div className='haonan'>
                     <div className='footer'>
-                        <a href="javascript">联系我们</a><span>|</span>
-                        <a href="javascript">招贤纳士</a><span>|</span>
-                        <a href="javascript">风格模板</a><span>|</span>
+                        <a href="javascript">联系我们</a>
+                        <span>|</span>
+                        <a href="javascript">招贤纳士</a>
+                        <span>|</span>
+                        <a href="javascript">风格模板</a>
+                        <span>|</span>
                         <a href="javascript">官方博客</a>
                     </div>
                     <div className='footer-text'>
-                    老黄版权所有　©1994-2018　没有备案 没有ICP 没有业务经营许可证 就是这么嚣张 不要问我为什么
+                        老黄版权所有 ©1994-2018 没有备案 没有ICP 没有业务经营许可证 就是这么嚣张 不要问我为什么
                     </div>
                 </div>
-                <BackTop />
+                <BackTop/>
+                <Loginmodal visible={this.state.visible} handleCancel={this.handleCancel} />
             </div>
         )
     }
 }
-
+// const App = Form.create()(App);
 export default App;
