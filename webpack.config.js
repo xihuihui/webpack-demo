@@ -2,7 +2,8 @@ const path = require("path");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require("webpack");
-
+const ImageminPlugin = require('imagemin-webpack-plugin').default
+const imageminMozjpeg = require('imagemin-mozjpeg')
 
 
 module.exports = {
@@ -48,6 +49,17 @@ module.exports = {
             /* 因为和 webpack 4 的兼容性问题，chunksSortMode 参数需要设置为 none https://github.com/jantimon/html-webpack-plugin/issues/870 */
             chunksSortMode: 'none'
         }),
+        //图片压缩
+        new ImageminPlugin({
+            disable: process.env.NODE_ENV !== 'production',
+            test: /\.(jpe?g|png|gif|svg)$/i,
+            plugins: [
+                imageminMozjpeg({
+                    quality: 10,
+                    progressive: true
+                })
+            ]
+        })
         
     ],
     output: {
